@@ -1,0 +1,32 @@
+{
+  "coop" : [ {
+    "doorName" : "Coop Door",
+    "doorUnlockScheduleID" : 0,
+    "doorUnlockGuardTime" : 5,
+    "guardTimeFlag" : "set",
+    "tamperAlarmState" : "unset",
+    "acAlarmState" : "unset",
+    "batteryAlarmState" : "unset",
+    "doorHeldAlarmState" : "unset",
+    "doorForcedAlarmState" : "unset",
+    "relayState" : "unset",
+    "auxRelayState" : "unset",
+    "currentDateTime" : "2015-09-07T00:24:44.000",
+    "relayAlertState" : "unset"
+  } ],
+  "loadingbay" : [ {
+    "doorName" : "Loading Bay Door",
+    "doorUnlockScheduleID" : 0,
+    "doorUnlockGuardTime" : 5,
+    "guardTimeFlag" : "set",
+    "tamperAlarmState" : "unset",
+    "acAlarmState" : "unset",
+    "batteryAlarmState" : "unset",
+    "doorHeldAlarmState" : "unset",
+    "doorForcedAlarmState" : "unset",
+    "relayState" : "unset",
+    "auxRelayState" : "unset",
+    "currentDateTime" : "2015-09-06T23:57:30.000",
+    "relayAlertState" : "unset"
+  } ]
+}
