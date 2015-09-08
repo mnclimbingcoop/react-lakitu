@@ -11,8 +11,9 @@ var ApiKeyForm = React.createClass({
 
   render: function() {
     var access = this.props.access
+    var formClass = 'api-key-' + access.success
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form className={formClass} onSubmit={this.handleSubmit}>
         <input className={access.success}
                type="password"
                ref="token"
@@ -24,6 +25,57 @@ var ApiKeyForm = React.createClass({
 
 });
 
+var AccessHolder = React.createClass({
+  handleSubmit: function(e) {
+    e.preventDefault();
+
+    var firstName      = React.findDOMNode(this.refs.firstName).value.trim();
+    var lastName       = React.findDOMNode(this.refs.lastName).value.trim();
+    var email          = React.findDOMNode(this.refs.email).value.trim();
+    var phone          = React.findDOMNode(this.refs.phone).value.trim();
+    var cardNumber     = React.findDOMNode(this.refs.cardNumber).value.trim();
+    var expirationDate = React.findDOMNode(this.refs.expirationDate).value.trim();
+
+    if (!accessToken) { return; }
+
+    var accessHolder = {
+      firstName: firstName,
+      lastName: lastName,
+      emailAddress: emailAddress,
+      phoneNumber: phoneNumber,
+      cards: [
+        { cardNumber: cardNumber, formatName: "MNCC" }
+      ],
+      endTime: "2015-09-07T14:18:56.225"
+    }
+
+    this.props.onApiKeySubmit(accessHolder);
+    return;
+  },
+
+  render: function() { 
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <h2>Access Holder</h2>
+        <p>
+          <input type="text" placeholder="First Name" ref="firstName" />
+          <input type="text" placeholder="Last Name" ref="lastName" />
+        </p>
+        <p>
+          <input type="text" placeholder="Email Address" ref="emailAddress" />
+          <input type="text" placeholder="Phone Number" ref="phoneNumber" />
+        </p>
+        <p>
+          <input type="text" placeholder="Fob Number" ref="cardNumber" />
+          <input type="datetime" placeholder="Access Expiration Date" ref="expirationDate" />
+        </p>
+        <button type="submit">Configure Access</button>
+      </form>
+    )
+  }
+});
+
+
 var Door = React.createClass({
 
   render: function() {
@@ -31,12 +83,7 @@ var Door = React.createClass({
 
     return (
       <div id="door-{door.key}" className="door">
-        <h2 className="door-key">
-          {door.doorName}
-        </h2>
-        <p className="door-info">
-          Lock state: {door.relayState}
-        </p>
+        <h2 className={door.relayState}>{door.doorName}</h2>
         <DoorForm doorKey={door.key} onDoorSubmit={this.props.onDoorSubmit} />
       </div>
     );
@@ -48,8 +95,12 @@ var LakituResult = React.createClass({
   render: function() {
     var messageId = this.props.commandResult.messageId;
     var md5 = this.props.commandResult.md5OfMessageBody;
+    var lakituClass = 'lakitu-empty';
+    var label = '';
+    if (md5) { label = 'Last Message Sent: '; }
+    if (messageId) { lakituClass = 'lakitu-updated'; }
     return (
-      <div className="lakituResult">Last Message Sent: {messageId}</div>
+      <div className={lakituClass}>{label}{messageId}</div>
     );
   }
 });
@@ -113,7 +164,7 @@ var DoorBox = React.createClass({
   handleApiKeySubmit: function(apiToken) {
     this.setState({
       commandResult: this.state.commandResult,
-      access: { token: apiToken, success: "", valid: true },
+      access: { token: apiToken, success: "unknown" },
       data: this.state.data
     });
   },
@@ -122,11 +173,18 @@ var DoorBox = React.createClass({
     var apiToken = this.state.access.token;
     var url = this.props.lakituUrl +
               'doors/' + doorCommand.action + '/' + doorCommand.door;
+
+    this.setState({
+      commandResult: { messageId: "", md5OfMessageBody: this.state.commandResult.md5OfMessageBody },
+      access: this.state.access,
+      data: this.state.data
+    });
+
     $.post(url, {access_token: apiToken})
       .done(function(json) {
         this.setState({
           commandResult: json,
-          access: { token: apiToken, success: "valid", valid: true },
+          access: { token: apiToken, success: "valid" },
           data: this.state.data
         });
 
@@ -135,7 +193,7 @@ var DoorBox = React.createClass({
         var token = this.state.access.token;
         this.setState({
           commandResult: this.state.commandResult,
-          access: { token: token, success: "invalid", valid: false },
+          access: { token: token, success: "invalid" },
           data: this.state.data
         });
       }.bind(this));
@@ -144,21 +202,19 @@ var DoorBox = React.createClass({
   getInitialState: function() {
     return {
       data: [],
-      access: {
-        token: "INVALID",
-        success: "",
-        valid: false
-      },
-      commandResult: {
-        md5OfMessageBody: "",
-        messageId:  ""
-      }
+      access: { token: "", success: "unknown" },
+      commandResult: { md5OfMessageBody: "", messageId:  "" }
     };
   },
 
   componentDidMount: function() {
     this.loadCommentsFromServer();
     setInterval(this.loadCommentsFromServer, this.props.pollInterval);
+  },
+
+  handleAccessHolder: function(accessHolder) {
+    // TODO: POST json data
+    console.log("add access holder" + accessHolder);
   },
 
   render: function() {
@@ -168,13 +224,13 @@ var DoorBox = React.createClass({
         <LakituResult commandResult={this.state.commandResult} />
         <ApiKeyForm access={this.state.access} onApiKeySubmit={this.handleApiKeySubmit} />
         <DoorList data={this.state.data} onDoorSubmit={this.handleDoorSubmit} />
+        <AccessHolder onAccessHolderSubmit={this.handleAccessHolder} />
       </div>
     );
   }
 
 });
 
-// Joonei1Eemaero6Maejucheivoo9YooB
 
 React.render(
   <DoorBox

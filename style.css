@@ -6,3 +6,41 @@ input.invalid {
 input.valid {
     background-color: green;
 }
+
+div.door h2 {
+    padding-left: 1.2em;
+}
+
+div.door h2.set {
+    background-image: url('unlock.svg');
+    background-repeat: no-repeat;
+}
+
+div.door h2.unset {
+    background-image: url('lock.svg');
+    background-repeat: no-repeat;
+}
+
+form.api-key-valid {
+    display: none;
+}
+
+form.api-key-unknown {
+    background-color: yellow;
+}
+
+div.lakitu-default {
+    opacity: 1;
+    display: none;
+}
+
+div.lakitu-empty {
+    opacity: 1;
+}
+
+div.lakitu-updated {
+    transition: opacity 3s ease-in-out;
+    -moz-transition: opacity 3s ease-in-out;
+    -webkit-transition: opacity 3s ease-in-out;
+    opacity: 0;
+}
