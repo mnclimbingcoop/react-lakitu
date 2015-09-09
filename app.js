@@ -80,9 +80,10 @@ var Door = React.createClass({
 
   render: function() {
     var door = this.props.doorState;
+    var doorIcon = 'door-' + door.key;
 
     return (
-      <div id="door-{door.key}" className="door">
+      <div id={doorIcon} className="door">
         <h2 className={door.relayState}>{door.doorName}</h2>
         <DoorForm doorKey={door.key} onDoorSubmit={this.props.onDoorSubmit} />
       </div>
@@ -147,17 +148,31 @@ var DoorForm = React.createClass({
 
 var DoorBox = React.createClass({
 
-  loadCommentsFromServer: function() {
-    $.getJSON(this.props.url)
+  loadDoorsFromServer: function() {
+    var url = this.props.lakituUrl + 'doors';
+    var apiToken = this.state.access.token;
+
+    $.getJSON(url, {access_token: apiToken})
     .done(function(json) {
+      var doors = [];
+      for (var key in json) {
+        if (json.hasOwnProperty(key)) {
+          var door = json[key];
+          door.key = key;
+          doors.push(door);
+        }
+      }
+      this.apiTokenValid("valid");
       this.setState({
         commandResult: this.state.commandResult,
         access: this.state.access,
-        data: json
+        data: doors
       });
+
     }.bind(this))
     .fail(function(xhr, status, err) {
-      console.error(this.props.url, status, err.toString());
+      this.apiTokenValid("invalid");
+      console.error(url, status, err.toString());
     }.bind(this))
   },
 
@@ -167,6 +182,15 @@ var DoorBox = React.createClass({
       access: { token: apiToken, success: "unknown" },
       data: this.state.data
     });
+  },
+
+  apiTokenValid: function(success) {
+    var token = this.state.access.token;
+      this.setState({
+        commandResult: this.state.commandResult,
+        access: { token: token, success: success },
+        data: this.state.data
+      });
   },
 
   handleDoorSubmit: function(doorCommand) {
@@ -184,18 +208,13 @@ var DoorBox = React.createClass({
       .done(function(json) {
         this.setState({
           commandResult: json,
-          access: { token: apiToken, success: "valid" },
+          access: this.state.access,
           data: this.state.data
         });
-
+        this.apiTokenValid("valid");
       }.bind(this))
       .fail(function(xhr, status, err) {
-        var token = this.state.access.token;
-        this.setState({
-          commandResult: this.state.commandResult,
-          access: { token: token, success: "invalid" },
-          data: this.state.data
-        });
+        this.apiTokenValid("invalid");
       }.bind(this));
   },
 
@@ -208,8 +227,8 @@ var DoorBox = React.createClass({
   },
 
   componentDidMount: function() {
-    this.loadCommentsFromServer();
-    setInterval(this.loadCommentsFromServer, this.props.pollInterval);
+    this.loadDoorsFromServer();
+    setInterval(this.loadDoorsFromServer, this.props.pollInterval);
   },
 
   handleAccessHolder: function(accessHolder) {
@@ -220,7 +239,6 @@ var DoorBox = React.createClass({
   render: function() {
     return (
       <div className="doorBox">
-        <h1>Doors</h1>
         <LakituResult commandResult={this.state.commandResult} />
         <ApiKeyForm access={this.state.access} onApiKeySubmit={this.handleApiKeySubmit} />
         <DoorList data={this.state.data} onDoorSubmit={this.handleDoorSubmit} />
@@ -231,12 +249,10 @@ var DoorBox = React.createClass({
 
 });
 
-
 React.render(
   <DoorBox
-    url="doors.json"
-    pollInterval={5000}
-    lakituUrl="http://localhost:8080/"
+    pollInterval={3000}
+    lakituUrl="http://localhost:6590/"
     />,
   document.getElementById('content')
 );
