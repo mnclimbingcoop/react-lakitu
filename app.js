@@ -72,25 +72,23 @@ var AccessHolder = React.createClass({
 
     var firstName      = React.findDOMNode(this.refs.firstName).value.trim();
     var lastName       = React.findDOMNode(this.refs.lastName).value.trim();
-    var email          = React.findDOMNode(this.refs.email).value.trim();
-    var phone          = React.findDOMNode(this.refs.phone).value.trim();
+    var email          = React.findDOMNode(this.refs.emailAddress).value.trim();
+    var phone          = React.findDOMNode(this.refs.phoneNumber).value.trim();
     var cardNumber     = React.findDOMNode(this.refs.cardNumber).value.trim();
     var expirationDate = React.findDOMNode(this.refs.expirationDate).value.trim();
 
-    if (!accessToken) { return; }
+    if (!expirationDate || !firstName || !lastName) { return; }
 
     var accessHolder = {
       firstName: firstName,
       lastName: lastName,
-      emailAddress: emailAddress,
-      phoneNumber: phoneNumber,
-      cards: [
-        { cardNumber: cardNumber, formatName: "MNCC" }
-      ],
-      endTime: "2015-09-07T14:18:56.225"
+      emailAddress: email,
+      phoneNumber: phone,
+      cards: [ { cardNumber: cardNumber, formatName: "MNCC" } ],
+      endTime: expirationDate
     }
 
-    this.props.onApiKeySubmit(accessHolder);
+    this.props.onAccessHolderSubmit(accessHolder);
     return;
   },
 
@@ -99,16 +97,19 @@ var AccessHolder = React.createClass({
       <form onSubmit={this.handleSubmit}>
         <h2>Access Holder</h2>
         <p>
-          <input type="text" placeholder="First Name" ref="firstName" />
-          <input type="text" placeholder="Last Name" ref="lastName" />
+          <input type="text" required="required" placeholder="First Name" ref="firstName" />
+          <input type="text" required="required" placeholder="Last Name" ref="lastName" />
         </p>
         <p>
-          <input type="text" placeholder="Email Address" ref="emailAddress" />
-          <input type="text" placeholder="Phone Number" ref="phoneNumber" />
+          <input type="email" placeholder="user@domain.com" ref="emailAddress" />
+          <input type="tel"
+                 placeholder="(###) ###-####"
+                 ref="phoneNumber"
+                 pattern='[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}' />
         </p>
         <p>
-          <input type="text" placeholder="Fob Number" ref="cardNumber" />
-          <input type="datetime" placeholder="Access Expiration Date" ref="expirationDate" />
+          <input type="text" required="required" placeholder="Fob Number" ref="cardNumber" />
+          <input type="date" required="required" placeholder="Access Expiration Date" ref="expirationDate" />
         </p>
         <button type="submit">Configure Access</button>
       </form>
@@ -357,9 +358,9 @@ var Event = React.createClass({
     return (
       <div className="event">
          <span className="door"> {this.props.door} </span> 
-         <span className="desc"> {desc} </span> 
+         <span className="desc"> {desc} </span>
          <span className="time">
-           <FormattedRelative value={this.props.timestamp} units="hour" />
+           <FormattedRelative value={this.props.timestamp} />
          </span>
       </div>
     );
@@ -483,8 +484,24 @@ var DoorBox = React.createClass({
   },
 
   handleAccessHolder: function(accessHolder) {
-    // TODO: POST json data
-    console.log("add access holder" + accessHolder);
+    var apiToken = this.state.access.token;
+    var url = this.props.lakituUrl + 'access/?access_token=' + apiToken;
+    var data = JSON.stringify(accessHolder)
+
+    this.clearMessageId();
+
+    $.ajax(url, {
+      type: 'POST',
+      data: data,
+      contentType: 'application/json',
+      success: function(json) {
+        this.setState({ commandResult: json });
+        this.apiTokenValid("valid");
+      }.bind(this),
+      error: function(xhr, status, err) {
+        this.apiTokenValid("invalid");
+      }.bind(this)
+    });
   },
 
   render: function() {
