@@ -12,12 +12,12 @@ div.door h2 {
 }
 
 div.door h2.set {
-    background-image: url('unlock.svg');
+    background-image: url('../images/unlock.svg');
     background-repeat: no-repeat;
 }
 
 div.door h2.unset {
-    background-image: url('lock.svg');
+    background-image: url('../images/lock.svg');
     background-repeat: no-repeat;
 }
 
@@ -96,7 +96,7 @@ div.cardholder {
 }
 
 input.cred-search {
-    background-image: url('search.svg');
+    background-image: url('../images/search.svg');
     padding-left: 1.4em;
     background-repeat: no-repeat;
 
@@ -107,41 +107,41 @@ input.cred-search {
     margin-bottom: 0.25em;
 }
 
-div.cardholder span {
-    padding-top: 3px;
-    padding-bottom: 3px;
-    background-repeat: no-repeat;
+div.cardholder {
+
+    span {
+        padding-top: 3px;
+        padding-bottom: 3px;
+        background-repeat: no-repeat;
+    }
+
+    span.name {
+        background-image: url('../images/account-circle.svg');
+        padding-left: 26px;
+        color: darkviolet;
+    }
+
+    span.email {
+        background-image: url('../images/email.svg');
+        padding-left: 26px;
+        color: darkblue;
+    }
+
+    span.phone {
+        background-image: url('../images/call.svg');
+        padding-left: 26px;
+        color: darkgreen;
+    }
+
+    span.schedule {
+        background-image: url('../images/schedule.svg');
+        padding-left: 26px;
+        color: darkcyan;
+    }
+
 }
 
-div.cardholder span.name {
-    background-image: url('account-circle.svg');
-    padding-left: 26px;
-    color: darkviolet;
-}
 
-div.cardholder span.email {
-    background-image: url('email.svg');
-    padding-left: 26px;
-    color: darkblue;
-}
-
-div.cardholder span.phone {
-    background-image: url('call.svg');
-    padding-left: 26px;
-    color: darkgreen;
-}
-
-div.cardholder span.schedule {
-    background-image: url('schedule.svg');
-    padding-left: 26px;
-    color: darkcyan;
-}
-
-li.credential span.expires {
-    background-image: url('timelapse.svg');
-    padding-left: 26px;
-    color: darkorange;    
-}
 
 ul.credentials {
     margin: 0;
@@ -152,16 +152,22 @@ ul.credentials {
 li::before {
     content: '';
     display: inline-block;
-    background-image: url('membership.svg');
+    background-image: url('../images/membership.svg');
     background-repeat: no-repeat;
     background-position: center;
-    min-width 24px;
     width: 24px;
     height: 24px;
+    min-width: 24px;
     min-height: 24px;
 }
 
 li.credential {
-    padding-left 2.0em;
+    padding-left: 2.0em;
     vertical-align: middle;
+
+    span.expires {
+        background-image: url('../images/timelapse.svg');
+        padding-left: 26px;
+        color: darkorange;    
+    }
 }
