@@ -14,6 +14,8 @@ var streamify = require('gulp-streamify');
 var sass = require('gulp-sass');
 var plumber = require('gulp-plumber');
 var del = require('del');
+var browserSync = require('browser-sync');
+var reload = browserSync.reload;
 
 var path = {
   DEST: 'dist',
@@ -84,7 +86,7 @@ gulp.task('sass', function () {
     .pipe(sass().on('error', sass.logError))
     .pipe(gulp.dest(path.DEST + '/css'));
 });
- 
+
 gulp.task('sass:watch', ['sass'], function () {
   gulp.watch(path.SASS, ['sass']);
 });
@@ -110,6 +112,16 @@ gulp.task('watch', [
   'svg:watch'
 ]);
 
+gulp.task('serve', ['watch'], function() {
+  browserSync({
+    server: {
+      baseDir: 'dist'
+    }
+  });
+
+  gulp.watch(['**/*.*'], {cwd: 'dist'}, reload);
+});
+
 gulp.task('build', ['assemble', 'sass', 'svg']);
 
-gulp.task('default', ['watch']);
+gulp.task('default', ['serve']);
