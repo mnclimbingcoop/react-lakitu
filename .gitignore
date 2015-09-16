@@ -3,3 +3,5 @@ node_modules/
 vars.json
 *.swp
 dist/
+aws.json
+npm-debug.log

@@ -16,6 +16,10 @@ var plumber = require('gulp-plumber');
 var del = require('del');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
+var s3 = require('gulp-s3');
+var fs = require('fs');
+
+aws = JSON.parse(fs.readFileSync('./aws.json'));
 
 var path = {
   DEST: 'dist',
@@ -46,6 +50,7 @@ gulp.task('assemble', ['replaceHTML'], function(){
     transform: [reactify]
   })
     .bundle()
+    .pipe(plumber())
     .pipe(source(path.MINIFIED_OUT))
     .pipe(streamify(uglify()))
     .pipe(gulp.dest(path.DEST_BUILD));
@@ -61,11 +66,13 @@ gulp.task('assemble:watch', ['assemble'], function() {
 
   return watcher.on('update', function () {
     watcher.bundle()
+      .pipe(plumber())
       .pipe(source(path.OUT))
       .pipe(gulp.dest(path.DEST_SRC))
       console.log('Updated');
   })
     .bundle()
+    .pipe(plumber())
     .pipe(source(path.OUT))
     .pipe(gulp.dest(path.DEST_SRC));
 });
@@ -99,6 +106,12 @@ gulp.task('replaceHTML', function(){
       'js': 'build/' + path.MINIFIED_OUT
     }))
     .pipe(gulp.dest(path.DEST));
+});
+
+gulp.task('publish', ['build'], function(){
+  gulp.src('./dist/**')
+    .pipe(plumber())
+    .pipe(s3(aws));
 });
 
 gulp.task('clean', function(cb) {
