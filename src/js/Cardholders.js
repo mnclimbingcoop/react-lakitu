@@ -18,13 +18,7 @@ var Cardholders = React.createClass({
       );
     });
 
-    if (this.props.cardholders.length > 0) {
-      return (
-        <div className="cardholders">{eventNodes}</div>
-      );
-    } else {
-      return (<span/>)
-    }
+    return ( <ul className="events collection">{eventNodes}</ul>)
 
   }
 });

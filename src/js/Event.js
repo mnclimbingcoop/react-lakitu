@@ -11,13 +11,21 @@ var Event = React.createClass({
       desc = this.props.firstName + ' ' + this.props.lastName;
     }
     return (
-      <div className="event">
-         <span className="door"> {this.props.door} </span> 
-         <span className="desc"> {desc} </span>
-         <span className="time">
-           <FormattedRelative value={this.props.timestamp} />
-         </span>
-      </div>
+      <li className="collection-item event s12">
+        <div className="chip">
+          {this.props.door}
+          <i className="material-icons">home</i>
+        </div>
+
+        <div className="chip">
+          {desc}
+          <i className="material-icons">card_membership</i>
+        </div>
+        <div className="chip">
+          <FormattedRelative value={this.props.timestamp} />
+          <i className="material-icons">timelapse</i>
+        </div>
+      </li>
     );
   }
 });

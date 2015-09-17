@@ -1,9 +1,10 @@
 //var React = require('react');
+var Chip = require('./Chip');
 
 var Schedule = React.createClass({
   render: function() {
     return (
-        <span className="schedule">{this.props.scheduleName}</span>
+      <Chip icon="timelapse">{this.props.scheduleName}</Chip>
     );
   }
 });

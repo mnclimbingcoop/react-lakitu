@@ -31,7 +31,7 @@ var path = {
   MINIFIED_OUT: 'build.min.js',
   OUT: 'build.js',
   SASS: 'src/sass/**/*.scss',
-  SVG: 'src/images/*.svg'
+  IMAGES: ['src/images/*.svg','src/images/*.png' ]
 };
 
 gulp.task('html', function(){
@@ -83,14 +83,14 @@ gulp.task('assemble:watch', ['assemble'], function() {
     .pipe(gulp.dest(path.DEST_SRC));
 });
 
-gulp.task('svg', function(){
-  gulp.src(path.SVG)
+gulp.task('images', function(){
+  gulp.src(path.IMAGES)
     .pipe(plumber())
     .pipe(gulp.dest(path.DEST + '/images'));
 });
 
-gulp.task('svg:watch', ['svg'], function () {
-  gulp.watch(path.SVG, ['svg']);
+gulp.task('images:watch', ['images'], function () {
+  gulp.watch(path.IMAGES, ['images']);
 });
 
 gulp.task('sass', function () {
@@ -128,7 +128,7 @@ gulp.task('watch', [
   'sass:watch',
   'assemble:watch',
   'html:watch',
-  'svg:watch'
+  'images:watch'
 ]);
 
 gulp.task('serve', ['watch'], function() {
@@ -141,6 +141,6 @@ gulp.task('serve', ['watch'], function() {
   gulp.watch(['**/*.*'], {cwd: 'dist'}, reload);
 });
 
-gulp.task('build', ['html', 'favicon', 'assemble', 'sass', 'svg']);
+gulp.task('build', ['html', 'favicon', 'assemble', 'sass', 'images']);
 
 gulp.task('default', ['serve']);

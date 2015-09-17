@@ -14,9 +14,15 @@ var DoorForm = React.createClass({
   render: function() {
     return (
       <div className="doorButtons">
-      <button type="button" onClick={this.lock} > Lock</button>
-      <button type="button" onClick={this.unlock} > Unlock</button>
-      <button type="button" onClick={this.open} > Open</button>
+      <a className="waves-effect waves-light btn" type="button" onClick={this.lock}>
+        <i className="material-icons left">lock</i>
+        Lock</a>
+      <a className="waves-effect waves-light btn" type="button" onClick={this.unlock}>
+        <i className="material-icons left">lock_open</i>
+        Unlock</a>
+      <a className="waves-effect waves-light btn" type="button" onClick={this.open}>
+        <i className="material-icons left">lock_outline</i>
+        Open</a>
       </div>
     );
   }

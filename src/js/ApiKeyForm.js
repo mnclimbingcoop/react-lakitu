@@ -15,11 +15,21 @@ var ApiKeyForm = React.createClass({
     var formClass = 'api-key-' + access.success
     return (
       <form className={formClass} onSubmit={this.handleSubmit}>
-        <input className={access.success}
-               type="password"
-               ref="token"
-               defaultValue={access.token}/>
-        <button type="submit">Update Key</button>
+        <div className="row">
+          <div className="input-field col s12">
+            <label for="token">API Key</label>
+            <input className={access.success}
+                   type="password"
+                   ref="token"
+                   placeholder="API Key"
+                   defaultValue={access.token}/>
+          </div>
+        </div>
+        <button className="waves-effect waves-light btn" type="submit">
+          Connect
+          <i className="material-icons right">send</i>
+        </button>
+
       </form>
     );
   }
