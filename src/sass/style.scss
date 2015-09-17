@@ -7,26 +7,12 @@ input.valid {
     background-color: green;
 }
 
-div.door h2 {
-    padding-left: 1.2em;
-}
-
-div.door h2.set {
-    background-image: url('../images/unlock.svg');
-    background-repeat: no-repeat;
-}
-
-div.door h2.unset {
-    background-image: url('../images/lock.svg');
-    background-repeat: no-repeat;
-}
-
 form.api-key-valid {
     display: none;
 }
 
 form.api-key-unknown {
-    background-color: yellow;
+    background-color: lemonchiffon;
 }
 
 div.lakitu-default {
@@ -38,50 +24,24 @@ div.lakitu-empty {
     opacity: 1;
 }
 
-div.cardholders {
-    font-size: 0.9em;
-    border-style: solid;
-    border-width: thin;
-    height: 14em;
+ul.cardholders {
+    min-height: 6em;
+    max-height: 14em;
     overflow: scroll;
 }
 
-div.eventList {
-    font-size: 0.9em;
-    border-style: solid;
-    border-width: thin;
-    height: 10em;
-    overflow: scroll;
+a.brand-logo {
+    padding-left: 8px;
+    img {
+        width: 42px;
+        height: 42px;
+        vertical-align: text-bottom;
+    }
 }
 
-div.cardholder span {
-    display: inline-block;
+
+li.event {
     white-space: nowrap;
-}
-
-div.cardholder span div.credentials {
-    padding-left: 2em;
-}
-
-div.event span {
-    display: inline-block;
-    overflow: hidden;
-    white-space: nowrap;
-}
-
-div.event span.door {
-    min-width: 20%;
-    width:     20%;
-}
-
-div.event span.desc {
-    min-width: 35%;
-    width:     35%;
-}
-
-div.event span.time {
-    min-width: 40%;
-    width:     40%;
 }
 
 div.lakitu-updated {
@@ -89,85 +49,4 @@ div.lakitu-updated {
     -moz-transition: opacity 3s ease-in-out;
     -webkit-transition: opacity 3s ease-in-out;
     opacity: 0;
-}
-
-div.cardholder {
-    white-space: nowrap;
-}
-
-input.cred-search {
-    background-image: url('../images/search.svg');
-    padding-left: 1.4em;
-    background-repeat: no-repeat;
-
-    font-size: 1.2em;
-    border-style: solid;
-    border-width: thin;
-    width: 92%;
-    margin-bottom: 0.25em;
-}
-
-div.cardholder {
-
-    span {
-        padding-top: 3px;
-        padding-bottom: 3px;
-        background-repeat: no-repeat;
-    }
-
-    span.name {
-        background-image: url('../images/account-circle.svg');
-        padding-left: 26px;
-        color: darkviolet;
-    }
-
-    span.email {
-        background-image: url('../images/email.svg');
-        padding-left: 26px;
-        color: darkblue;
-    }
-
-    span.phone {
-        background-image: url('../images/call.svg');
-        padding-left: 26px;
-        color: darkgreen;
-    }
-
-    span.schedule {
-        background-image: url('../images/schedule.svg');
-        padding-left: 26px;
-        color: darkcyan;
-    }
-
-}
-
-
-
-ul.credentials {
-    margin: 0;
-    padding-left: 1em;
-    list-style: none;
-}
-
-li::before {
-    content: '';
-    display: inline-block;
-    background-image: url('../images/membership.svg');
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 24px;
-    height: 24px;
-    min-width: 24px;
-    min-height: 24px;
-}
-
-li.credential {
-    padding-left: 2.0em;
-    vertical-align: middle;
-
-    span.expires {
-        background-image: url('../images/timelapse.svg');
-        padding-left: 26px;
-        color: darkorange;    
-    }
 }

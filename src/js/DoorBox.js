@@ -4,10 +4,8 @@ var ApiKeyForm       = require('./ApiKeyForm');
 var Cardholders      = require('./Cardholders');
 var CredentialSearch = require('./CredentialSearch');
 var DoorList         = require('./DoorList');
-var EventList        = require('./EventList');
+var Events        = require('./Events');
 var LakituResult     = require('./LakituResult');
-
-// TODO: Replace JQuery usage with something not JQuery
 
 var DoorBox = React.createClass({
 
@@ -17,17 +15,21 @@ var DoorBox = React.createClass({
 
     if (!apiToken) { return; }
 
-    $.getJSON(url, {access_token: apiToken})
-    .done(function(json) {
+    $.ajax(url, {
+      dataType: 'json',
+      data: { access_token: apiToken },
+      success: function(json) {
+        var doors = this.mapToList(json, function(door) { return door.door; });
+        this.apiTokenValid("valid");
+        this.setState({ doors: doors });
+      }.bind(this),
+      error: function(xhr, status, err) {
+        this.apiTokenValid("invalid");
+        console.error(url, status, err.toString());
+        Materialize.toast( 'Failed to door information.', 3000);
 
-      var doors = this.mapToList(json, function(door) { return door.door; });
-      this.apiTokenValid("valid");
-      this.setState({ doors: doors });
-    }.bind(this))
-    .fail(function(xhr, status, err) {
-      this.apiTokenValid("invalid");
-      console.error(url, status, err.toString());
-    }.bind(this))
+      }.bind(this)
+    });
   },
 
   loadEventsFromServer: function() {
@@ -35,21 +37,25 @@ var DoorBox = React.createClass({
     var url = this.props.lakituUrl + 'events';
     if (!apiToken) { return; }
 
-    $.getJSON(url, {access_token: apiToken})
-    .done(function(json) {
-      var events = this.mapToList(json, function(event) {
-        return event.timestamp + '@' + event.door;
-      });
-      events.sort(function(a, b) {
-        if ( a.timestamp < b.timestamp ) return 1;
-        if ( a.timestamp > b.timestamp ) return -1;
-        return 0;
-      });
-      this.setState({ events: events });
-    }.bind(this))
-    .fail(function(xhr, status, err) {
-      console.error(url, status, err.toString());
-    }.bind(this))
+    $.ajax(url, {
+      dataType: 'json',
+      data: { access_token: apiToken },
+      success: function(json) {
+        var events = this.mapToList(json, function(event) {
+          return event.timestamp + '@' + event.door;
+        });
+        events.sort(function(a, b) {
+          if ( a.timestamp < b.timestamp ) return 1;
+          if ( a.timestamp > b.timestamp ) return -1;
+          return 0;
+        });
+        this.setState({ events: events });
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error(url, status, err.toString());
+        Materialize.toast( 'Failed to load events.', 3000);
+      }.bind(this)
+    });
   },
 
   findCardholders: function(query) {
@@ -59,23 +65,26 @@ var DoorBox = React.createClass({
     var url = this.props.lakituUrl + 'cardholders/find/' + query;
     if (!apiToken) { return; }
 
-    $.getJSON(url, {access_token: apiToken})
-    .done(function(json) {
+    $.ajax(url, {
+      dataType: 'json',
+      data: { access_token: apiToken },
+      success: function(json) {
+        var cardholders = this.mapToList(json, function(cardholder) {
+          return cardholder.cardholderID + ':' + cardholder.door;
+        });
+        cardholders.sort(function(a, b) {
+          if ( (a.forename + a.surname) < (b.forename + b.surname) ) return -1;
+          if ( (a.forename + a.surname) > (b.forename + b.surname) ) return 1;
+          return 0;
+        });
 
-      var cardholders = this.mapToList(json, function(cardholder) {
-        return cardholder.cardholderID + ':' + cardholder.door;
-      });
-      cardholders.sort(function(a, b) {
-        if ( (a.forename + a.surname) < (b.forename + b.surname) ) return -1;
-        if ( (a.forename + a.surname) > (b.forename + b.surname) ) return 1;
-        return 0;
-      });
-
-      this.setState({ cardholders: cardholders });
-    }.bind(this))
-    .fail(function(xhr, status, err) {
-      console.error(url, status, err.toString());
-    }.bind(this))
+        this.setState({ cardholders: cardholders });
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error(url, status, err.toString());
+        Materialize.toast( 'Failed to find cardholder(s).', 3000);
+      }.bind(this)
+    });
   },
 
   mapToList: function(json, getKey) {
@@ -108,14 +117,24 @@ var DoorBox = React.createClass({
 
     this.clearMessageId();
 
-    $.post(url, {access_token: apiToken})
-      .done(function(json) {
+    $.ajax(url, {
+      data: { access_token: apiToken },
+      type: 'POST',
+      success: function(json) {
         this.setState({ commandResult: json });
         this.apiTokenValid("valid");
-      }.bind(this))
-      .fail(function(xhr, status, err) {
+        Materialize.toast(
+          doorCommand.door + ' was ' + doorCommand.action + 'ed.', 3000, 'rounded'
+        );
+      }.bind(this),
+      error: function(xhr, status, err) {
         this.apiTokenValid("invalid");
-      }.bind(this));
+        Materialize.toast(
+          'failed to ' + doorCommand.action + ' ' + doorCommand.door + ' door.' , 3000
+        );
+
+      }.bind(this)
+    });
   },
 
   componentDidMount: function() {
@@ -139,26 +158,60 @@ var DoorBox = React.createClass({
       success: function(json) {
         this.setState({ commandResult: json });
         this.apiTokenValid("valid");
+        Materialize.toast(
+          'Access holder was updated.', 3000, 'rounded'
+        );
       }.bind(this),
       error: function(xhr, status, err) {
         this.apiTokenValid("invalid");
+        Materialize.toast(
+          'Failed to update Access holder.', 3000, 'rounded'
+        );
       }.bind(this)
     });
   },
 
   render: function() {
+
+    var show = ( <DoorList doors={this.state.doors} onDoorSubmit={this.handleDoorSubmit} /> );
+
+    if (this.state.show == 'events') {
+      var show = ( <Events events={this.state.events} /> );
+    } else if (this.state.show == 'access') {
+      var show = (
+        <div id="access">
+          <AccessHolder onAccessHolderSubmit={this.handleAccessHolder} />
+          <CredentialSearch handleSearch={this.findCardholders} />
+          <Cardholders cardholders={this.state.cardholders}/>
+        </div>
+      );
+    }
+
     return (
       <div className="doorBox">
+        <nav>
+          <div className="nav-wrapper">
+            <a href="#" className="left brand-logo">
+              <img src="images/lakitu.png"/>
+              Lakitu
+            </a>
+            <ul id="nav-mobile" className="right">
+              <li><a className="waves-effect waves-light" onClick={this.showDoors}>Doors</a></li>
+              <li><a className="waves-effect waves-light" onClick={this.showEvents}>Events</a></li>
+              <li><a className="waves-effect waves-light" onClick={this.showAccess}>Access</a></li>
+            </ul>
+          </div>
+        </nav>
         <LakituResult commandResult={this.state.commandResult} />
         <ApiKeyForm access={this.state.access} onApiKeySubmit={this.handleApiKeySubmit} />
-        <DoorList doors={this.state.doors} onDoorSubmit={this.handleDoorSubmit} />
-        <EventList events={this.state.events} />
-        <AccessHolder onAccessHolderSubmit={this.handleAccessHolder} />
-        <CredentialSearch handleSearch={this.findCardholders} />
-        <Cardholders cardholders={this.state.cardholders}/>
+        {show}
       </div>
     );
   },
+
+  showAccess: function() { this.setState({show: 'access'}); },
+  showDoors: function() { this.setState({show: 'doors'}); },
+  showEvents: function() { this.setState({show: 'events'}); },
 
   handleApiKeySubmit: function(apiToken) {
     this.setState(
@@ -185,7 +238,8 @@ var DoorBox = React.createClass({
       commandResult: { md5OfMessageBody: "", messageId:  "" },
       cardholders: [],
       doors: [],
-      events: []
+      events: [],
+      show: 'doors'
     };
   }
 

@@ -18,12 +18,17 @@ var CredentialSearch = React.createClass({
     return (
       <form className="find-access">
         <h2>Find Access Holders</h2>
-        <input type="text"
-               className="cred-search"
-               placeholder="Search..."
-               ref="query"
-               value={this.props.query}
-               onChange={this.lazyChange} />
+        <div className="row">
+          <div className="input-field col s12">
+            <i className="material-icons prefix">search</i>
+            <label for="query">Search...</label>
+            <input type="text"
+                   placeholder="Search..."
+                   ref="query"
+                   value={this.props.query}
+                   onChange={this.lazyChange} />
+          </div>
+        </div>
       </form>
     )
   }

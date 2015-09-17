@@ -5,11 +5,12 @@ var Door = React.createClass({
 
   render: function() {
     var door = this.props.doorState;
-    var doorIcon = 'door-' + door.door;
+    var icon = 'lock';
+    if (door.relayState == 'set') { icon = 'lock_open'; }
 
     return (
-      <div id={doorIcon} className="door">
-        <h2 className={door.relayState}>{door.doorName}</h2>
+      <div id={door.door} className="door">
+        <h3><i className="medium material-icons left">{icon}</i> {door.doorName}</h3>
         <DoorForm doorKey={door.door} onDoorSubmit={this.props.onDoorSubmit} />
       </div>
     );

@@ -2,8 +2,10 @@
 //
 var Roles = require('./Roles');
 var Credentials = require('./Credentials');
+var Chip = require('./Chip');
 
 var Cardholder = React.createClass({
+
   render: function() {
     var name = this.props.firstName;
     if (this.props.middleName) {
@@ -15,16 +17,27 @@ var Cardholder = React.createClass({
 
     var cardholder = [];
     cardholder.push( <span key="key" className="key">{this.props.key}</span> );
-    if (name) { cardholder.push( <span key="name" className="name">{name}</span> ); }
-    if (this.props.email) { cardholder.push( <span key="email" className="email">{this.props.email}</span> ); }
-    if (this.props.phone) { cardholder.push( <span key="phone" className="phone">{this.props.phone}</span> ); }
+    cardholder.push( <Chip key="home" icon="home">{this.props.door}</Chip> );
+    cardholder.push( <Chip icon="account_circle">{name}</Chip> );
+    if (this.props.email) {
+      var emailTo = 'mailto:' + this.props.email;
+      cardholder.push(
+        <Chip icon="email"><a href={emailTo}>{this.props.email}</a></Chip>
+      );
+    }
+    if (this.props.phone) {
+      var phoneTel = 'tel:' + this.props.phone;
+      cardholder.push(
+        <Chip icon="phone"><a href={phoneTel}>{this.props.phone}</a></Chip>
+      );
+    }
 
     return (
-      <div className="cardholder">
+      <li className="collection-item cardholder s12">
         {cardholder}
          <Roles roles={this.props.roles}/>
          <Credentials credentials={this.props.credentials} />
-      </div>
+      </li>
     )
   }
 });

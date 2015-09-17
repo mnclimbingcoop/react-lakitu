@@ -12,9 +12,7 @@ var Credentials = React.createClass({
       );
     });
     return (
-      <ul className="credentials">
-        {credentialNodes}
-      </ul>
+      <ul className="collection credentials">{credentialNodes}</ul>
     );
   }
 });
