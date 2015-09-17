@@ -27,6 +27,7 @@ var path = {
   DEST_SRC: 'dist/src',
   ENTRY_POINT: './src/js/App.js',
   HTML: 'src/index.html',
+  FAVICON: 'src/favicon.ico',
   MINIFIED_OUT: 'build.min.js',
   OUT: 'build.js',
   SASS: 'src/sass/**/*.scss',
@@ -43,6 +44,11 @@ gulp.task('html:watch', ['html'], function () {
   gulp.watch(path.HTML, ['html']);
 });
 
+gulp.task('favicon', function(){
+  gulp.src(path.FAVICON)
+    .pipe(plumber())
+    .pipe(gulp.dest(path.DEST));
+});
 
 gulp.task('assemble', ['replaceHTML'], function(){
   browserify({
@@ -135,6 +141,6 @@ gulp.task('serve', ['watch'], function() {
   gulp.watch(['**/*.*'], {cwd: 'dist'}, reload);
 });
 
-gulp.task('build', ['assemble', 'sass', 'svg']);
+gulp.task('build', ['html', 'favicon', 'assemble', 'sass', 'svg']);
 
 gulp.task('default', ['serve']);

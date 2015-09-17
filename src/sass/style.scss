@@ -50,7 +50,7 @@ div.eventList {
     font-size: 0.9em;
     border-style: solid;
     border-width: thin;
-    height: 10em;
+    max-height: 10em;
     overflow: scroll;
 }
 
@@ -113,6 +113,12 @@ div.cardholder {
         padding-top: 3px;
         padding-bottom: 3px;
         background-repeat: no-repeat;
+    }
+
+    span.door {
+        background-image: url('../images/door.svg');
+        padding-left: 26px;
+        color: brown;
     }
 
     span.name {
