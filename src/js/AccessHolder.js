@@ -31,7 +31,7 @@ var AccessHolder = React.createClass({
       <form onSubmit={this.handleSubmit}>
         <h2>
           <i className="medium material-icons left">account_circle</i>
-          Add/Update Access
+          Add/Update
         </h2>
         <div className="row">
           <div className="input-field col s6">
