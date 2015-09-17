@@ -4,10 +4,11 @@ var ApiKeyForm       = require('./ApiKeyForm');
 var Cardholders      = require('./Cardholders');
 var CredentialSearch = require('./CredentialSearch');
 var DoorList         = require('./DoorList');
-var Events        = require('./Events');
+var Events           = require('./Events');
 var LakituResult     = require('./LakituResult');
+var LakituHeader     = require('./LakituHeader');
 
-var DoorBox = React.createClass({
+var Lakitu = React.createClass({
 
   loadDoorsFromServer: function() {
     var url = this.props.lakituUrl + 'doors';
@@ -172,7 +173,6 @@ var DoorBox = React.createClass({
   },
 
   render: function() {
-
     var show = ( <DoorList doors={this.state.doors} onDoorSubmit={this.handleDoorSubmit} /> );
 
     if (this.state.show == 'events') {
@@ -189,19 +189,9 @@ var DoorBox = React.createClass({
 
     return (
       <div className="doorBox">
-        <nav>
-          <div className="nav-wrapper">
-            <a href="#" className="left brand-logo">
-              <img src="images/lakitu.png"/>
-              Lakitu
-            </a>
-            <ul id="nav-mobile" className="right">
-              <li><a className="waves-effect waves-light" onClick={this.showDoors}>Doors</a></li>
-              <li><a className="waves-effect waves-light" onClick={this.showEvents}>Events</a></li>
-              <li><a className="waves-effect waves-light" onClick={this.showAccess}>Access</a></li>
-            </ul>
-          </div>
-        </nav>
+        <LakituHeader showAccess={this.showAccess}
+                      showDoors={this.showDoors}
+                      showEvents={this.showEvents} />
         <LakituResult commandResult={this.state.commandResult} />
         <ApiKeyForm access={this.state.access} onApiKeySubmit={this.handleApiKeySubmit} />
         {show}
@@ -254,4 +244,4 @@ var DoorBox = React.createClass({
 
 });
 
-module.exports = DoorBox;
+module.exports = Lakitu;

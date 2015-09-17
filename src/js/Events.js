@@ -6,7 +6,7 @@ var Events = React.createClass({
     var eventNodes = this.props.events.map(function(event) {
       // TODO: Figure this out.  It's hard coded to CST right now
       // We should use UTC
-      var timestamp = event.timestamp;
+      var timestamp = event.timestamp + '-0400';
       return (
           <Event key={event.key}
                  door={event.door}
@@ -18,7 +18,10 @@ var Events = React.createClass({
     });
     return (
       <div id="events">
-        <h2>Events</h2>
+        <h2>
+          <i className="medium material-icons left">today</i>
+          Events
+        </h2>
         <ul className="events collection">{eventNodes}</ul>
       </div>
     );

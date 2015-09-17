@@ -17,7 +17,10 @@ var CredentialSearch = React.createClass({
   render: function() {
     return (
       <form className="find-access">
-        <h2>Find Access Holders</h2>
+        <h2>
+          <i className="medium material-icons left">search</i>
+          Lookup
+        </h2>
         <div className="row">
           <div className="input-field col s12">
             <i className="material-icons prefix">search</i>
