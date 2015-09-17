@@ -108,7 +108,7 @@ gulp.task('replaceHTML', function(){
     .pipe(gulp.dest(path.DEST));
 });
 
-gulp.task('publish', ['build'], function(){
+gulp.task('publish', function(){
   gulp.src('./dist/**')
     .pipe(plumber())
     .pipe(s3(aws));
