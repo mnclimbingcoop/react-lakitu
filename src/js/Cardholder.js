@@ -1,4 +1,7 @@
 //var React = require('react');
+//
+var Roles = require('./Roles');
+var Credentials = require('./Credentials');
 
 var Cardholder = React.createClass({
   render: function() {
