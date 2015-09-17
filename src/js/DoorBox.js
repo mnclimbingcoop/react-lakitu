@@ -223,6 +223,13 @@ var DoorBox = React.createClass({
   },
 
   apiTokenValid: function(success) {
+    // If the request was successful, put the token in local storage
+    if (success == 'valid' && this.state.access.success == 'unknown') {
+      var apiToken = this.state.access.token;
+      // Or we could use sessionStorage?
+      localStorage.setItem("lakituApiToken", apiToken);
+    }
+
     this.setState({ access: { token: this.state.access.token, success: success } });
   },
 
@@ -233,8 +240,10 @@ var DoorBox = React.createClass({
   },
 
   getInitialState: function() {
+      // Or we could use sessionStorage?
+    var apiToken = localStorage.getItem("lakituApiToken");
     return {
-      access: { token: "", success: "unknown" },
+      access: { token: apiToken, success: "unknown" },
       commandResult: { md5OfMessageBody: "", messageId:  "" },
       cardholders: [],
       doors: [],
