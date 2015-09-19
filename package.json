@@ -9,7 +9,6 @@
     "del": "2.0.2",
     "gulp": "3.9.0",
     "gulp-eslint": "0.12.0",
-    "gulp-html-replace": "1.5.1",
     "gulp-plumber": "1.0.1",
     "gulp-react": "3.0.1",
     "gulp-s3": "0.3.0",

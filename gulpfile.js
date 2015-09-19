@@ -5,7 +5,6 @@ Thanks:
 
 var gulp = require('gulp');
 var uglify = require('gulp-uglify');
-var htmlreplace = require('gulp-html-replace');
 var source = require('vinyl-source-stream');
 var browserify = require('browserify');
 var watchify = require('watchify');
@@ -23,13 +22,13 @@ aws = JSON.parse(fs.readFileSync('./aws.json'));
 
 var path = {
   DEST: 'dist',
-  DEST_BUILD: 'dist/build',
+  DEST_BUILD: 'dist/js',
   DEST_SRC: 'dist/src',
   ENTRY_POINT: './src/js/App.js',
   HTML: 'src/index.html',
   FAVICON: 'src/favicon.ico',
-  MINIFIED_OUT: 'build.min.js',
-  OUT: 'build.js',
+  MINIFIED_OUT: 'app.min.js',
+  OUT: 'app.js',
   SASS: 'src/sass/**/*.scss',
   IMAGES: ['src/images/*.svg','src/images/*.png' ]
 };
@@ -50,7 +49,7 @@ gulp.task('favicon', function(){
     .pipe(gulp.dest(path.DEST));
 });
 
-gulp.task('assemble', ['replaceHTML'], function(){
+gulp.task('assemble', function(){
   browserify({
     entries: [path.ENTRY_POINT],
     transform: [reactify]
@@ -102,16 +101,6 @@ gulp.task('sass', function () {
 
 gulp.task('sass:watch', ['sass'], function () {
   gulp.watch(path.SASS, ['sass']);
-});
-
-gulp.task('replaceHTML', function(){
-  gulp.src(path.HTML)
-    .pipe(plumber())
-    .pipe(htmlreplace({
-      'css': 'css/style.css',
-      'js': 'build/' + path.MINIFIED_OUT
-    }))
-    .pipe(gulp.dest(path.DEST));
 });
 
 gulp.task('publish', function(){
