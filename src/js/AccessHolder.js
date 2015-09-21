@@ -1,6 +1,17 @@
 //var React = require('react');
 
 var AccessHolder = React.createClass({
+
+  clearForm: function() {
+    console.log("Clearing form.");
+    React.findDOMNode(this.refs.firstName).value = '';
+    React.findDOMNode(this.refs.lastName).value = '';
+    React.findDOMNode(this.refs.emailAddress).value = '';
+    React.findDOMNode(this.refs.phoneNumber).value = '';
+    React.findDOMNode(this.refs.cardNumber).value = '';
+    React.findDOMNode(this.refs.expirationDate).value = '';
+  },
+
   handleSubmit: function(e) {
     e.preventDefault();
 
@@ -23,6 +34,8 @@ var AccessHolder = React.createClass({
     }
 
     this.props.onAccessHolderSubmit(accessHolder);
+    this.clearForm();
+    console.log("Cleared form?");
     return;
   },
 
