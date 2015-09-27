@@ -37,5 +37,10 @@
   "bugs": {
     "url": "https://github.com/aaronzirbes/react-lakitu/issues"
   },
-  "homepage": "https://github.com/aaronzirbes/react-lakitu#readme"
+  "homepage": "https://github.com/aaronzirbes/react-lakitu#readme",
+  "browserify": {
+    "transform": [
+      "reactify"
+    ]
+  }
 }

@@ -17,6 +17,9 @@ var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 var s3 = require('gulp-s3');
 var fs = require('fs');
+var requireDir = require('require-dir');
+
+requireDir('./src/gulp/tasks');
 
 aws = JSON.parse(fs.readFileSync('./aws.json'));
 
@@ -30,7 +33,6 @@ var path = {
   MINIFIED_OUT: 'app.min.js',
   OUT: 'app.js',
   SASS: 'src/sass/**/*.scss',
-  IMAGES: ['src/images/*.svg','src/images/*.png' ]
 };
 
 gulp.task('html', function(){
@@ -52,7 +54,6 @@ gulp.task('favicon', function(){
 gulp.task('assemble', function(){
   browserify({
     entries: [path.ENTRY_POINT],
-    transform: [reactify]
   })
     .bundle()
     .pipe(plumber())
@@ -64,7 +65,6 @@ gulp.task('assemble', function(){
 gulp.task('assemble:watch', ['assemble'], function() {
   var watcher  = watchify(browserify({
     entries: [path.ENTRY_POINT],
-    transform: [reactify],
     debug: true,
     cache: {}, packageCache: {}, fullPaths: true
   }));
@@ -73,23 +73,12 @@ gulp.task('assemble:watch', ['assemble'], function() {
     watcher.bundle()
       .pipe(plumber())
       .pipe(source(path.OUT))
-      .pipe(gulp.dest(path.DEST_SRC))
-      console.log('Updated');
+      .pipe(gulp.dest(path.DEST_SRC));
   })
     .bundle()
     .pipe(plumber())
     .pipe(source(path.OUT))
     .pipe(gulp.dest(path.DEST_SRC));
-});
-
-gulp.task('images', function(){
-  gulp.src(path.IMAGES)
-    .pipe(plumber())
-    .pipe(gulp.dest(path.DEST + '/images'));
-});
-
-gulp.task('images:watch', ['images'], function () {
-  gulp.watch(path.IMAGES, ['images']);
 });
 
 gulp.task('sass', function () {
