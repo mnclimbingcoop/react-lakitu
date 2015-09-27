@@ -1,5 +1,8 @@
 //var React = require('react');
+
+/* eslint-disable */
 var Door = require('./Door');
+/* eslint-enable */
 
 var DoorList = React.createClass({
   render: function() {

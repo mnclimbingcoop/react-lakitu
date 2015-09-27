@@ -3,7 +3,7 @@
 var AccessHolder = React.createClass({
 
   clearForm: function() {
-    console.log("Clearing form.");
+    console.log('Clearing form.');
     React.findDOMNode(this.refs.firstName).value = '';
     React.findDOMNode(this.refs.lastName).value = '';
     React.findDOMNode(this.refs.emailAddress).value = '';
@@ -15,11 +15,11 @@ var AccessHolder = React.createClass({
   handleSubmit: function(e) {
     e.preventDefault();
 
-    var firstName      = React.findDOMNode(this.refs.firstName).value.trim();
-    var lastName       = React.findDOMNode(this.refs.lastName).value.trim();
-    var email          = React.findDOMNode(this.refs.emailAddress).value.trim();
-    var phone          = React.findDOMNode(this.refs.phoneNumber).value.trim();
-    var cardNumber     = React.findDOMNode(this.refs.cardNumber).value.trim();
+    var firstName = React.findDOMNode(this.refs.firstName).value.trim();
+    var lastName = React.findDOMNode(this.refs.lastName).value.trim();
+    var email = React.findDOMNode(this.refs.emailAddress).value.trim();
+    var phone = React.findDOMNode(this.refs.phoneNumber).value.trim();
+    var cardNumber = React.findDOMNode(this.refs.cardNumber).value.trim();
     var expirationDate = React.findDOMNode(this.refs.expirationDate).value.trim();
 
     if (!expirationDate || !firstName || !lastName) { return; }
@@ -29,17 +29,17 @@ var AccessHolder = React.createClass({
       lastName: lastName,
       emailAddress: email,
       phoneNumber: phone,
-      cards: [ { cardNumber: cardNumber, formatName: "MNCC" } ],
+      cards: [ { cardNumber: cardNumber, formatName: 'MNCC' } ],
       endTime: expirationDate
-    }
+    };
 
     this.props.onAccessHolderSubmit(accessHolder);
     this.clearForm();
-    console.log("Cleared form?");
+    console.log('Cleared form?');
     return;
   },
 
-  render: function() { 
+  render: function() {
     return (
       <form onSubmit={this.handleSubmit}>
         <h2>
@@ -86,7 +86,7 @@ var AccessHolder = React.createClass({
         </button>
 
       </form>
-    )
+    );
   }
 });
 

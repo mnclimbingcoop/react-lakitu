@@ -1,8 +1,9 @@
 //var React = require('react');
-//
+/* eslint-disable */
 var Roles = require('./Roles');
 var Credentials = require('./Credentials');
 var Chip = require('./Chip');
+/* eslint-enable */
 
 var Cardholder = React.createClass({
 
@@ -38,7 +39,7 @@ var Cardholder = React.createClass({
          <Roles roles={this.props.roles}/>
          <Credentials credentials={this.props.credentials} />
       </li>
-    )
+    );
   }
 });
 

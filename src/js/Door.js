@@ -8,15 +8,15 @@ var Door = React.createClass({
     this.props.onDoorSubmit({door: door.door, action: action});
   },
 
-  lock:   function(e) { this.commandDoor('lock', e); },
+  lock: function(e) { this.commandDoor('lock', e); },
   unlock: function(e) { this.commandDoor('unlock', e); },
-  open:   function(e) { this.commandDoor('open', e); },
+  open: function(e) { this.commandDoor('open', e); },
 
 
   render: function() {
     var door = this.props.doorState;
     var icon = 'lock';
-    if (door.relayState == 'set') { icon = 'lock_open'; }
+    if (door.relayState === 'set') { icon = 'lock_open'; }
 
     return (
       <div id={door.door} className="row door">

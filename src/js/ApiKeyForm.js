@@ -11,8 +11,8 @@ var ApiKeyForm = React.createClass({
   },
 
   render: function() {
-    var access = this.props.access
-    var formClass = 'api-key-' + access.success
+    var access = this.props.access;
+    var formClass = 'api-key-' + access.success;
     return (
       <form className={formClass} onSubmit={this.handleSubmit}>
         <div className="row">
