@@ -7,7 +7,7 @@ var Chip = React.createClass({
         {this.props.children}
         <i className="material-icons">{this.props.icon}</i>
       </div>
-    )
+    );
   }
 });
 

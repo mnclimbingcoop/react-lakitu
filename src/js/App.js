@@ -1,5 +1,7 @@
 //var React = require('react');
+/*eslint-disable */
 var Lakitu = require('./Lakitu');
+/*eslint-enable */
 
 React.render(
   <Lakitu pollInterval={3000}

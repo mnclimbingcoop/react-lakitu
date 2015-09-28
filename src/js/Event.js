@@ -1,7 +1,10 @@
 //var React = require('react');
 //var ReactIntl  = require('react-intl');
-var IntlMixin = ReactIntl.IntlMixin;
+/* eslint-disable */
 var FormattedRelative = ReactIntl.FormattedRelative;
+/* eslint-enable */
+
+var IntlMixin = ReactIntl.IntlMixin;
 
 var Event = React.createClass({
   mixins: [IntlMixin],
@@ -11,16 +14,16 @@ var Event = React.createClass({
     var desc = this.props.eventType;
     if (this.props.firstName) {
       desc = this.props.firstName + ' ' + this.props.lastName;
-      if (desc == 'Skateboard Coop') {
+      if (desc === 'Skateboard Coop') {
         desc = 'Bathroom Key';
       }
-    }  else if (this.props.eventType == '12031') {
+    } else if (this.props.eventType === '12031') {
       icon = 'directions_walk';
       desc = 'Grant Access';
-    }  else if (this.props.eventType == '12032') {
+    } else if (this.props.eventType === '12032') {
       icon = 'lock_open';
       desc = 'Unlock';
-    }  else if (this.props.eventType == '12033') {
+    } else if (this.props.eventType === '12033') {
       icon = 'lock';
       desc = 'Lock';
     }

@@ -1,5 +1,8 @@
 //var React = require('react');
+
+/* eslint-disable */
 var Chip = require('./Chip');
+/* eslint-enable */
 
 var Schedule = React.createClass({
   render: function() {

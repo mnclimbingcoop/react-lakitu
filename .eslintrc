@@ -4,7 +4,10 @@
         "node": true
     },
     "globals": {
-        "React": true
+        "React": true,
+        "$": true,
+        "Materialize": true,
+        "ReactIntl": true
     },
     "ecmaFeatures": {
         "jsx": true
@@ -12,6 +15,8 @@
     "rules": {
         "eqeqeq": 1,
         "semi": 2,
-        "strict": 0
+        "strict": 0,
+        "no-unused-vars": 2,
+        "quotes": [2, "single"]
     }
 }

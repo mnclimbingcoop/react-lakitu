@@ -1,5 +1,7 @@
 //var React = require('react');
+/* eslint-disable */
 var Cardholder = require('./Cardholder');
+/* eslint-enable */
 
 var Cardholders = React.createClass({
   render: function() {
@@ -18,7 +20,7 @@ var Cardholders = React.createClass({
       );
     });
 
-    return ( <ul className="events collection">{eventNodes}</ul>)
+    return ( <ul className="events collection">{eventNodes}</ul>);
 
   }
 });

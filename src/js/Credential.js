@@ -1,10 +1,13 @@
 //var React      = require('react');
 //var ReactIntl  = require('react-intl');
+
+/* eslint-disable */
 var Cardholder = require('./Cardholder');
 var Chip = require('./Chip');
-
 var FormattedDate = ReactIntl.FormattedDate;
-var IntlMixin     = ReactIntl.IntlMixin;
+/* eslint-enable */
+
+var IntlMixin = ReactIntl.IntlMixin;
 
 var Credential = React.createClass({
   mixins: [IntlMixin],
@@ -18,7 +21,7 @@ var Credential = React.createClass({
     return (
       <Chip icon="settings_remote">
         {this.props.cardNumber}
-         &rarr; 
+         &rarr;
         {credentialExpires}
       </Chip>
     );

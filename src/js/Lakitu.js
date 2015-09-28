@@ -1,12 +1,15 @@
 //var React            = require('react');
-var AccessHolder     = require('./AccessHolder');
-var ApiKeyForm       = require('./ApiKeyForm');
-var Cardholders      = require('./Cardholders');
+
+/* eslint-disable */
+var AccessHolder = require('./AccessHolder');
+var ApiKeyForm = require('./ApiKeyForm');
+var Cardholders = require('./Cardholders');
 var CredentialSearch = require('./CredentialSearch');
-var DoorList         = require('./DoorList');
-var Events           = require('./Events');
-var LakituResult     = require('./LakituResult');
-var LakituHeader     = require('./LakituHeader');
+var DoorList = require('./DoorList');
+var Events = require('./Events');
+var LakituResult = require('./LakituResult');
+var LakituHeader = require('./LakituHeader');
+/* eslint-enable */
 
 var Lakitu = React.createClass({
 
@@ -18,14 +21,14 @@ var Lakitu = React.createClass({
 
     $.ajax(url, {
       dataType: 'json',
-      data: { access_token: apiToken },
+      data: { access_token: apiToken }, // eslint-disable-line camelcase
       success: function(json) {
         var doors = this.mapToList(json, function(door) { return door.door; });
-        this.apiTokenValid("valid");
+        this.apiTokenValid('valid');
         this.setState({ doors: doors });
       }.bind(this),
       error: function(xhr, status, err) {
-        this.apiTokenValid("invalid");
+        this.apiTokenValid('invalid');
         console.error(url, status, err.toString());
         Materialize.toast( 'Failed to door information.', 3000);
 
@@ -40,22 +43,26 @@ var Lakitu = React.createClass({
 
     $.ajax(url, {
       dataType: 'json',
-      data: { access_token: apiToken },
+      data: { access_token: apiToken }, // eslint-disable-line camelcase
       success: function(json) {
         var events = this.mapToList(json, function(event) {
           return event.timestamp + '@' + event.door;
         });
         events.sort(function(a, b) {
-          if ( a.timestamp < b.timestamp ) return 1;
-          if ( a.timestamp > b.timestamp ) return -1;
+          if ( a.timestamp < b.timestamp ) {
+              return 1;
+          }
+          if ( a.timestamp > b.timestamp ) {
+              return -1;
+          }
           return 0;
-        });
+        }).bind(this);
         this.setState({ events: events });
-      }.bind(this),
+      },
       error: function(xhr, status, err) {
         console.error(url, status, err.toString());
         Materialize.toast( 'Failed to load events.', 3000);
-      }.bind(this)
+      }
     });
   },
 
@@ -68,14 +75,18 @@ var Lakitu = React.createClass({
 
     $.ajax(url, {
       dataType: 'json',
-      data: { access_token: apiToken },
+      data: { access_token: apiToken }, // eslint-disable-line camelcase
       success: function(json) {
         var cardholders = this.mapToList(json, function(cardholder) {
           return cardholder.cardholderID + ':' + cardholder.door;
         });
         cardholders.sort(function(a, b) {
-          if ( (a.forename + a.surname) < (b.forename + b.surname) ) return -1;
-          if ( (a.forename + a.surname) > (b.forename + b.surname) ) return 1;
+          if ( (a.forename + a.surname) < (b.forename + b.surname) ) {
+              return -1;
+          }
+          if ( (a.forename + a.surname) > (b.forename + b.surname) ) {
+              return 1;
+          }
           return 0;
         });
 
@@ -84,7 +95,7 @@ var Lakitu = React.createClass({
       error: function(xhr, status, err) {
         console.error(url, status, err.toString());
         Materialize.toast( 'Failed to find cardholder(s).', 3000);
-      }.bind(this)
+      }
     });
   },
 
@@ -119,19 +130,19 @@ var Lakitu = React.createClass({
     this.clearMessageId();
 
     $.ajax(url, {
-      data: { access_token: apiToken },
+      data: { access_token: apiToken }, // eslint-disable-line camelcase
       type: 'POST',
       success: function(json) {
         this.setState({ commandResult: json });
-        this.apiTokenValid("valid");
+        this.apiTokenValid('valid');
         Materialize.toast(
           doorCommand.door + ' was ' + doorCommand.action + 'ed.', 3000, 'rounded'
         );
       }.bind(this),
-      error: function(xhr, status, err) {
-        this.apiTokenValid("invalid");
+      error: function() {
+        this.apiTokenValid('invalid');
         Materialize.toast(
-          'failed to ' + doorCommand.action + ' ' + doorCommand.door + ' door.' , 3000
+          'failed to ' + doorCommand.action + ' ' + doorCommand.door + ' door.', 3000
         );
 
       }.bind(this)
@@ -148,7 +159,7 @@ var Lakitu = React.createClass({
   handleAccessHolder: function(accessHolder) {
     var apiToken = this.state.access.token;
     var url = this.props.lakituUrl + 'access/?access_token=' + apiToken;
-    var data = JSON.stringify(accessHolder)
+    var data = JSON.stringify(accessHolder);
 
     this.clearMessageId();
 
@@ -158,13 +169,13 @@ var Lakitu = React.createClass({
       contentType: 'application/json',
       success: function(json) {
         this.setState({ commandResult: json });
-        this.apiTokenValid("valid");
+        this.apiTokenValid('valid');
         Materialize.toast(
           'Access holder was updated.', 3000, 'rounded'
         );
       }.bind(this),
-      error: function(xhr, status, err) {
-        this.apiTokenValid("invalid");
+      error: function() {
+        this.apiTokenValid('invalid');
         Materialize.toast(
           'Failed to update Access holder.', 3000, 'rounded'
         );
@@ -175,10 +186,10 @@ var Lakitu = React.createClass({
   render: function() {
     var show = ( <DoorList doors={this.state.doors} onDoorSubmit={this.handleDoorSubmit} /> );
 
-    if (this.state.show == 'events') {
-      var show = ( <Events events={this.state.events} /> );
-    } else if (this.state.show == 'access') {
-      var show = (
+    if (this.state.show === 'events') {
+      show = ( <Events events={this.state.events} /> );
+  } else if (this.state.show === 'access') {
+      show = (
         <div id="access">
           <AccessHolder onAccessHolderSubmit={this.handleAccessHolder} />
           <CredentialSearch handleSearch={this.findCardholders} />
@@ -205,7 +216,7 @@ var Lakitu = React.createClass({
 
   handleApiKeySubmit: function(apiToken) {
     this.setState(
-      { access: { token: apiToken, success: "unknown" } },
+      { access: { token: apiToken, success: 'unknown' } },
       function() {
         this.loadDoorsFromServer();
         this.loadEventsFromServer();
@@ -214,10 +225,10 @@ var Lakitu = React.createClass({
 
   apiTokenValid: function(success) {
     // If the request was successful, put the token in local storage
-    if (success == 'valid' && this.state.access.success == 'unknown') {
+    if (success === 'valid' && this.state.access.success === 'unknown') {
       var apiToken = this.state.access.token;
       // Or we could use sessionStorage?
-      localStorage.setItem("lakituApiToken", apiToken);
+      localStorage.setItem('lakituApiToken', apiToken);
     }
 
     this.setState({ access: { token: this.state.access.token, success: success } });
@@ -225,16 +236,16 @@ var Lakitu = React.createClass({
 
   clearMessageId: function() {
     this.setState({
-      commandResult: { messageId: "", md5OfMessageBody: this.state.commandResult.md5OfMessageBody },
+      commandResult: { messageId: '', md5OfMessageBody: this.state.commandResult.md5OfMessageBody }
     });
   },
 
   getInitialState: function() {
       // Or we could use sessionStorage?
-    var apiToken = localStorage.getItem("lakituApiToken");
+    var apiToken = localStorage.getItem('lakituApiToken');
     return {
-      access: { token: apiToken, success: "unknown" },
-      commandResult: { md5OfMessageBody: "", messageId:  "" },
+      access: { token: apiToken, success: 'unknown' },
+      commandResult: { md5OfMessageBody: '', messageId: '' },
       cardholders: [],
       doors: [],
       events: [],

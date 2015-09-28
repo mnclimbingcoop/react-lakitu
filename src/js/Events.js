@@ -1,5 +1,8 @@
 //var React = require('react');
+
+/* eslint-disable */
 var Event = require('./Event');
+/* eslint-enable */
 
 var Events = React.createClass({
   render: function() {

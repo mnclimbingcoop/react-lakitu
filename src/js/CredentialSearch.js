@@ -2,7 +2,7 @@
 var debounce = require('./debounce');
 
 var CredentialSearch = React.createClass({
-  handleChange: function(e) {
+  handleChange: function() {
     this.props.handleSearch(
       this.refs.query.getDOMNode().value
     );
@@ -33,7 +33,7 @@ var CredentialSearch = React.createClass({
           </div>
         </div>
       </form>
-    )
+    );
   }
 });
 
