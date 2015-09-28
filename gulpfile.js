@@ -70,14 +70,16 @@ gulp.task('assemble:watch', ['assemble'], function() {
 
   return watcher.on('update', function () {
     watcher.bundle()
-      .pipe(plumber())
-      .pipe(source(path.OUT))
-      .pipe(gulp.dest(path.DEST_SRC));
+        .pipe(plumber())
+        .pipe(source(path.MINIFIED_OUT))
+        .pipe(streamify(uglify()))
+        .pipe(gulp.dest(path.DEST_BUILD));
   })
     .bundle()
-    .pipe(plumber())
-    .pipe(source(path.OUT))
-    .pipe(gulp.dest(path.DEST_SRC));
+        .pipe(plumber())
+        .pipe(source(path.MINIFIED_OUT))
+        .pipe(streamify(uglify()))
+        .pipe(gulp.dest(path.DEST_BUILD));
 });
 
 gulp.task('sass', function () {
