@@ -1,0 +1,17 @@
+{
+    "env": {
+        "browser": true,
+        "node": true
+    },
+    "globals": {
+        "React": true
+    },
+    "ecmaFeatures": {
+        "jsx": true
+    },
+    "rules": {
+        "eqeqeq": 1,
+        "semi": 2,
+        "strict": 0
+    }
+}
