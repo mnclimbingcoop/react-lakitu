@@ -7,6 +7,7 @@ var streamify = require('gulp-streamify');
 var plumber = require('gulp-plumber');
 var gulpConfig = require('../gulp-config');
 var taskConfig = gulpConfig.tasks.assemble;
+var _ = require('lodash');
 
 gulp.task('assemble', function(){
   browserify(taskConfig.browserify.config)
