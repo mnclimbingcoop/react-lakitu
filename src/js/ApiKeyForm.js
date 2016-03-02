@@ -1,18 +1,18 @@
-//var React = require('react');
+let React = require('react');
 
-var ApiKeyForm = React.createClass({
+let ApiKeyForm = React.createClass({
 
   handleSubmit: function(e) {
     e.preventDefault();
-    var accessToken = React.findDOMNode(this.refs.token).value.trim();
+    let accessToken = React.findDOMNode(this.refs.token).value.trim();
     if (!accessToken) { return; }
     this.props.onApiKeySubmit(accessToken);
     return;
   },
 
   render: function() {
-    var access = this.props.access;
-    var formClass = 'api-key-' + access.success;
+    let access = this.props.access;
+    let formClass = 'api-key-' + access.success;
     return (
       <form className={formClass} onSubmit={this.handleSubmit}>
         <div className="row">

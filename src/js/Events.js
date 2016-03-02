@@ -1,15 +1,15 @@
-//var React = require('react');
+let React = require('react');
 
 /* eslint-disable */
-var Event = require('./Event');
+let Event = require('./Event');
 /* eslint-enable */
 
-var Events = React.createClass({
+let Events = React.createClass({
   render: function() {
-    var eventNodes = this.props.events.map(function(event) {
+    let eventNodes = this.props.events.map(function(event) {
       // TODO: Figure this out.  It's hard coded to CST right now
       // We should use UTC
-      var timestamp = event.timestamp + '-0400';
+      let timestamp = event.timestamp + '-0400';
       return (
           <Event key={event.key}
                  door={event.door}

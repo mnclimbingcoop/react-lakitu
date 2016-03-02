@@ -1,17 +1,17 @@
-//var React = require('react');
-//var ReactIntl  = require('react-intl');
+let React = require('react');
+let ReactIntl = require('react-intl');
 /* eslint-disable */
-var FormattedRelative = ReactIntl.FormattedRelative;
+let FormattedRelative = ReactIntl.FormattedRelative;
 /* eslint-enable */
 
-var IntlMixin = ReactIntl.IntlMixin;
+let IntlMixin = ReactIntl.IntlMixin;
 
-var Event = React.createClass({
+let Event = React.createClass({
   mixins: [IntlMixin],
   render: function() {
 
-    var icon = 'card_membership';
-    var desc = this.props.eventType;
+    let icon = 'card_membership';
+    let desc = this.props.eventType;
     if (this.props.firstName) {
       desc = this.props.firstName + ' ' + this.props.lastName;
       if (desc === 'Skateboard Coop') {

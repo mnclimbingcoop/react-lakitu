@@ -1,8 +1,8 @@
 // Just adding this rather then pulling in all of underscore
 // http://modernjavascript.blogspot.com/2013/08/building-better-debounce.html
-var debounce = function(func, wait) {
+let debounce = function(func, wait) {
     // we need to save these in the closure
-    var timeout, args, context, timestamp;
+    let timeout, args, context, timestamp;
 
     return function() {
 
@@ -12,10 +12,10 @@ var debounce = function(func, wait) {
         timestamp = new Date();
 
         // this is where the magic happens
-        var later = function() {
+        let later = function() {
 
             // how long ago was the last call
-            var last = (new Date()) - timestamp;
+            let last = (new Date()) - timestamp;
 
             // if the latest call was less that the wait period ago
             // then we reset the timeout to wait for the difference

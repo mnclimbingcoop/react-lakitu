@@ -1,21 +1,21 @@
-//var React            = require('react');
+let React = require('react');
 
 /* eslint-disable */
-var AccessHolder = require('./AccessHolder');
-var ApiKeyForm = require('./ApiKeyForm');
-var Cardholders = require('./Cardholders');
-var CredentialSearch = require('./CredentialSearch');
-var DoorList = require('./DoorList');
-var Events = require('./Events');
-var LakituResult = require('./LakituResult');
-var LakituHeader = require('./LakituHeader');
+let AccessHolder = require('./AccessHolder');
+let ApiKeyForm = require('./ApiKeyForm');
+let Cardholders = require('./Cardholders');
+let CredentialSearch = require('./CredentialSearch');
+let DoorList = require('./DoorList');
+let Events = require('./Events');
+let LakituResult = require('./LakituResult');
+let LakituHeader = require('./LakituHeader');
 /* eslint-enable */
 
-var Lakitu = React.createClass({
+let Lakitu = React.createClass({
 
   loadDoorsFromServer: function() {
-    var url = this.props.lakituUrl + 'doors';
-    var apiToken = this.state.access.token;
+    let url = this.props.lakituUrl + 'doors';
+    let apiToken = this.state.access.token;
 
     if (!apiToken) { return; }
 
@@ -23,7 +23,7 @@ var Lakitu = React.createClass({
       dataType: 'json',
       data: { access_token: apiToken }, // eslint-disable-line camelcase
       success: function(json) {
-        var doors = this.mapToList(json, function(door) { return door.door; });
+        let doors = this.mapToList(json, function(door) { return door.door; });
         this.apiTokenValid('valid');
         this.setState({ doors: doors });
       }.bind(this),
@@ -37,15 +37,15 @@ var Lakitu = React.createClass({
   },
 
   loadEventsFromServer: function() {
-    var apiToken = this.state.access.token;
-    var url = this.props.lakituUrl + 'events';
+    let apiToken = this.state.access.token;
+    let url = this.props.lakituUrl + 'events';
     if (!apiToken) { return; }
 
     $.ajax(url, {
       dataType: 'json',
       data: { access_token: apiToken }, // eslint-disable-line camelcase
       success: function(json) {
-        var events = this.mapToList(json, function(event) {
+        let events = this.mapToList(json, function(event) {
           return event.timestamp + '@' + event.door;
         });
         events.sort(function(a, b) {
@@ -69,15 +69,15 @@ var Lakitu = React.createClass({
   findCardholders: function(query) {
     if (!query) { return; }
 
-    var apiToken = this.state.access.token;
-    var url = this.props.lakituUrl + 'cardholders/find/' + query;
+    let apiToken = this.state.access.token;
+    let url = this.props.lakituUrl + 'cardholders/find/' + query;
     if (!apiToken) { return; }
 
     $.ajax(url, {
       dataType: 'json',
       data: { access_token: apiToken }, // eslint-disable-line camelcase
       success: function(json) {
-        var cardholders = this.mapToList(json, function(cardholder) {
+        let cardholders = this.mapToList(json, function(cardholder) {
           return cardholder.cardholderID + ':' + cardholder.door;
         });
         cardholders.sort(function(a, b) {
@@ -100,13 +100,13 @@ var Lakitu = React.createClass({
   },
 
   mapToList: function(json, getKey) {
-      var things = [];
-      for (var door in json) {
+      let things = [];
+      for (let door in json) {
         if (json.hasOwnProperty(door)) {
-          var stuff = json[door];
+          let stuff = json[door];
           if( Object.prototype.toString.call( stuff ) === '[object Array]' ) {
-            for (var i in stuff) {
-              var thing = stuff[i];
+            for (let i in stuff) {
+              let thing = stuff[i];
               thing.door = door;
               thing.key = getKey(thing);
               things.push(thing);
@@ -123,8 +123,8 @@ var Lakitu = React.createClass({
   },
 
   handleDoorSubmit: function(doorCommand) {
-    var apiToken = this.state.access.token;
-    var url = this.props.lakituUrl +
+    let apiToken = this.state.access.token;
+    let url = this.props.lakituUrl +
               'doors/' + doorCommand.action + '/' + doorCommand.door;
 
     this.clearMessageId();
@@ -157,9 +157,9 @@ var Lakitu = React.createClass({
   },
 
   handleAccessHolder: function(accessHolder) {
-    var apiToken = this.state.access.token;
-    var url = this.props.lakituUrl + 'access/?access_token=' + apiToken;
-    var data = JSON.stringify(accessHolder);
+    let apiToken = this.state.access.token;
+    let url = this.props.lakituUrl + 'access/?access_token=' + apiToken;
+    let data = JSON.stringify(accessHolder);
 
     this.clearMessageId();
 
@@ -184,7 +184,7 @@ var Lakitu = React.createClass({
   },
 
   render: function() {
-    var show = ( <DoorList doors={this.state.doors} onDoorSubmit={this.handleDoorSubmit} /> );
+    let show = ( <DoorList doors={this.state.doors} onDoorSubmit={this.handleDoorSubmit} /> );
 
     if (this.state.show === 'events') {
       show = ( <Events events={this.state.events} /> );
@@ -226,7 +226,7 @@ var Lakitu = React.createClass({
   apiTokenValid: function(success) {
     // If the request was successful, put the token in local storage
     if (success === 'valid' && this.state.access.success === 'unknown') {
-      var apiToken = this.state.access.token;
+      let apiToken = this.state.access.token;
       // Or we could use sessionStorage?
       localStorage.setItem('lakituApiToken', apiToken);
     }
@@ -242,7 +242,7 @@ var Lakitu = React.createClass({
 
   getInitialState: function() {
       // Or we could use sessionStorage?
-    var apiToken = localStorage.getItem('lakituApiToken');
+    let apiToken = localStorage.getItem('lakituApiToken');
     return {
       access: { token: apiToken, success: 'unknown' },
       commandResult: { md5OfMessageBody: '', messageId: '' },

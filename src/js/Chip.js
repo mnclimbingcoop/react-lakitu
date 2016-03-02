@@ -1,6 +1,6 @@
-//var React = require('react');
+let React = require('react');
 
-var Chip = React.createClass({
+let Chip = React.createClass({
   render: function() {
     return (
       <div className="chip">

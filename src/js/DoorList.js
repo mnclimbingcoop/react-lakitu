@@ -1,13 +1,13 @@
-//var React = require('react');
+let React = require('react');
 
 /* eslint-disable */
-var Door = require('./Door');
+let Door = require('./Door');
 /* eslint-enable */
 
-var DoorList = React.createClass({
+let DoorList = React.createClass({
   render: function() {
-    var onDoorSubmit = this.props.onDoorSubmit;
-    var doorNodes = this.props.doors.map(function(door) {
+    let onDoorSubmit = this.props.onDoorSubmit;
+    let doorNodes = this.props.doors.map(function(door) {
       return (
           <Door key={door.door} doorState={door} onDoorSubmit={onDoorSubmit} />
       );

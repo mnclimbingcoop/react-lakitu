@@ -1,6 +1,6 @@
-//var React            = require('react');
+let React = require('react');
 
-var LakituHeader = React.createClass({
+let LakituHeader = React.createClass({
   render: function() {
     return (
       <nav className="titleBar orange">
