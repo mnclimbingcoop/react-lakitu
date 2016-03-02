@@ -10,7 +10,8 @@ module.exports = function(gulpConfig) {
         source: 'app.min.js',
         config: {
           entries: ['./src/js/App.js']
-        }
+        },
+        external: ['react', 'react-intl']
       }
     },
     html: {

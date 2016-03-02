@@ -42,7 +42,8 @@
   "homepage": "https://github.com/aaronzirbes/react-lakitu#readme",
   "browserify": {
     "transform": [
-      ["reactify", {"es6": true}]
+      "reactify",
+      ["babelify", { "presets": ["es2015"] }]
     ]
   }
 }

@@ -1,13 +1,13 @@
-//var React = require('react');
+let React = require('react');
 
 /* eslint-disable */
-var Credential = require('./Credential');
+let Credential = require('./Credential');
 /* eslint-enable */
 
-var Credentials = React.createClass({
+let Credentials = React.createClass({
   render: function() {
     if (!this.props.credentials) { return (<span/>); }
-    var credentialNodes = this.props.credentials.map(function(credential) {
+    let credentialNodes = this.props.credentials.map(function(credential) {
       return (
         <Credential key={credential.credentialID}
                     cardNumber={credential.cardNumber}

@@ -11,6 +11,7 @@ var _ = require('lodash');
 
 gulp.task('assemble', function(){
   browserify(taskConfig.browserify.config)
+    .external(taskConfig.browserify.external)
     .bundle()
     .pipe(plumber())
     .pipe(source(taskConfig.browserify.source))

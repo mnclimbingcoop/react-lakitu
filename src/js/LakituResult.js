@@ -1,11 +1,11 @@
-//var React = require('react');
+let React = require('react');
 
-var LakituResult = React.createClass({
+let LakituResult = React.createClass({
   render: function() {
-    var messageId = this.props.commandResult.messageId;
-    var md5 = this.props.commandResult.md5OfMessageBody;
-    var lakituClass = 'lakitu-empty';
-    var label = '';
+    let messageId = this.props.commandResult.messageId;
+    let md5 = this.props.commandResult.md5OfMessageBody;
+    let lakituClass = 'lakitu-empty';
+    let label = '';
     if (md5) { label = 'Last Message Sent: '; }
     if (messageId) { lakituClass = 'lakitu-updated'; }
     return (

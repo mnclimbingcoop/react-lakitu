@@ -1,10 +1,10 @@
-//var React = require('react');
+let React = require('react');
 
 /* eslint-disable */
-var Chip = require('./Chip');
+let Chip = require('./Chip');
 /* eslint-enable */
 
-var Schedule = React.createClass({
+let Schedule = React.createClass({
   render: function() {
     return (
       <Chip icon="timelapse">{this.props.scheduleName}</Chip>

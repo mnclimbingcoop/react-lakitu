@@ -1,9 +1,9 @@
-//var React = require('react');
+let React = require('react');
 
-var Door = React.createClass({
+let Door = React.createClass({
 
   commandDoor: function(action, e) {
-    var door = this.props.doorState;
+    let door = this.props.doorState;
     e.preventDefault();
     this.props.onDoorSubmit({door: door.door, action: action});
   },
@@ -14,8 +14,8 @@ var Door = React.createClass({
 
 
   render: function() {
-    var door = this.props.doorState;
-    var icon = 'lock';
+    let door = this.props.doorState;
+    let icon = 'lock';
     if (door.relayState === 'set') { icon = 'lock_open'; }
 
     return (

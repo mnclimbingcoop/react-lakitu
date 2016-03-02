@@ -1,11 +1,11 @@
-//var React = require('react');
+let React = require('react');
 /* eslint-disable */
-var Cardholder = require('./Cardholder');
+let Cardholder = require('./Cardholder');
 /* eslint-enable */
 
-var Cardholders = React.createClass({
+let Cardholders = React.createClass({
   render: function() {
-    var eventNodes = this.props.cardholders.map(function(cardholder) {
+    let eventNodes = this.props.cardholders.map(function(cardholder) {
       return (
         <Cardholder key={cardholder.key}
                     door={cardholder.door}

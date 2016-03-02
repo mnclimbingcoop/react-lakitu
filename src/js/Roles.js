@@ -1,16 +1,16 @@
-//var React = require('react');
+let React = require('react');
 
 /* eslint-disable */
-var Schedule = require('./Schedule');
+let Schedule = require('./Schedule');
 /* eslint-enable */
 
-var Roles = React.createClass({
+let Roles = React.createClass({
   render: function() {
     if (!this.props.roles) {
         return (<span/>);
     }
 
-    var schedules = this.props.roles.map(function(role) {
+    let schedules = this.props.roles.map(function(role) {
       return (
         <Schedule key={role.roleID} scheduleName={role.scheduleName} />
       );

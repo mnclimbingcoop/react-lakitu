@@ -1,6 +1,6 @@
-//var React = require('react');
+let React = require('react');
 
-var AccessHolder = React.createClass({
+let AccessHolder = React.createClass({
 
   clearForm: function() {
     console.log('Clearing form.');
@@ -15,16 +15,16 @@ var AccessHolder = React.createClass({
   handleSubmit: function(e) {
     e.preventDefault();
 
-    var firstName = React.findDOMNode(this.refs.firstName).value.trim();
-    var lastName = React.findDOMNode(this.refs.lastName).value.trim();
-    var email = React.findDOMNode(this.refs.emailAddress).value.trim();
-    var phone = React.findDOMNode(this.refs.phoneNumber).value.trim();
-    var cardNumber = React.findDOMNode(this.refs.cardNumber).value.trim();
-    var expirationDate = React.findDOMNode(this.refs.expirationDate).value.trim();
+    let firstName = React.findDOMNode(this.refs.firstName).value.trim();
+    let lastName = React.findDOMNode(this.refs.lastName).value.trim();
+    let email = React.findDOMNode(this.refs.emailAddress).value.trim();
+    let phone = React.findDOMNode(this.refs.phoneNumber).value.trim();
+    let cardNumber = React.findDOMNode(this.refs.cardNumber).value.trim();
+    let expirationDate = React.findDOMNode(this.refs.expirationDate).value.trim();
 
     if (!expirationDate || !firstName || !lastName) { return; }
 
-    var accessHolder = {
+    let accessHolder = {
       firstName: firstName,
       lastName: lastName,
       emailAddress: email,

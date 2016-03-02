@@ -1,6 +1,6 @@
-//var React = require('react');
+let React = require('react');
 /*eslint-disable */
-var Lakitu = require('./Lakitu');
+let Lakitu = require('./Lakitu');
 /*eslint-enable */
 
 React.render(

@@ -1,7 +1,7 @@
-//var React = require('react');
-var debounce = require('./debounce');
+let React = require('react');
+let debounce = require('./debounce');
 
-var CredentialSearch = React.createClass({
+let CredentialSearch = React.createClass({
   handleChange: function() {
     this.props.handleSearch(
       this.refs.query.getDOMNode().value
