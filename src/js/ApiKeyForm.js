@@ -17,7 +17,7 @@ let ApiKeyForm = React.createClass({
       <form className={formClass} onSubmit={this.handleSubmit}>
         <div className="row">
           <div className="input-field col s12">
-            <label for="token">API Key</label>
+            <label htmlFor="token">API Key</label>
             <input className={access.success}
                    type="password"
                    ref="token"

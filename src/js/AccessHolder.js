@@ -48,21 +48,21 @@ let AccessHolder = React.createClass({
         </h2>
         <div className="row">
           <div className="input-field col s6">
-            <label for="firstName">First Name</label>
+            <label htmlFor="firstName">First Name</label>
             <input type="text" required="required" placeholder="First Name" ref="firstName" />
           </div>
           <div className="input-field col s6">
-            <label for="lastName">Last Name</label>
+            <label htmlFor="lastName">Last Name</label>
             <input type="text" required="required" placeholder="Last Name" ref="lastName" />
           </div>
         </div>
         <div className="row">
           <div className="col s6">
-            <label for="emailAddress">Email</label>
+            <label htmlFor="emailAddress">Email</label>
             <input type="email" placeholder="user@domain.com" ref="emailAddress" />
           </div>
           <div className="col s6">
-            <label for="phoneNumber">Phone</label>
+            <label htmlFor="phoneNumber">Phone</label>
             <input type="tel"
                    placeholder="(###) ###-####"
                    ref="phoneNumber"
@@ -71,11 +71,11 @@ let AccessHolder = React.createClass({
         </div>
         <div className="row">
           <div className="input-field col s6">
-            <label for="cardNumber">Fob Number</label>
+            <label htmlFor="cardNumber">Fob Number</label>
             <input type="text" required="required" placeholder="Fob Number" ref="cardNumber" />
           </div>
           <div className="col s6">
-            <label for="expirationDate">Access Expiration</label>
+            <label htmlFor="expirationDate">Access Expiration</label>
             <input type="date" required="required" placeholder="Access Expiration" ref="expirationDate" />
           </div>
         </div>
