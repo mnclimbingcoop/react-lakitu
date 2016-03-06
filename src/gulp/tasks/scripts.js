@@ -1,9 +1,10 @@
-var gulp = require('gulp');
-var eslint = require('gulp-eslint');
-var gulpConfig = require('../gulp-config');
-var taskConfig = gulpConfig.tasks.scripts;
-var eslintConfig = taskConfig.eslint;
-var watch = require('gulp-watch');
+import gulp from 'gulp';
+import eslint from 'gulp-eslint';
+import gulpConfig from '../gulp-config';
+import watch from 'gulp-watch';
+
+const taskConfig = gulpConfig.tasks.scripts;
+const eslintConfig = taskConfig.eslint;
 
 gulp.task('scripts:lint', scriptsLint);
 gulp.task('scripts:watchLint', scriptsWatchLint);
@@ -16,7 +17,7 @@ function scriptsLint() {
 }
 
 function scriptsWatchLint(done) {
-    watch(eslintConfig.files.src, function() {
+    watch(eslintConfig.files.src, () => {
         gulp.src(eslintConfig.files.src)
             .pipe(eslint())
             .pipe(eslint.format())
