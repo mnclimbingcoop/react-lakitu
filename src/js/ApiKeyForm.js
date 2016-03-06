@@ -1,10 +1,11 @@
-let React = require('react');
+const React = require('react');
+const ReactDOM = require('react-dom');
 
 let ApiKeyForm = React.createClass({
 
   handleSubmit: function(e) {
     e.preventDefault();
-    let accessToken = React.findDOMNode(this.refs.token).value.trim();
+    let accessToken = ReactDOM.findDOMNode(this.refs.token).value.trim();
     if (!accessToken) { return; }
     this.props.onApiKeySubmit(accessToken);
     return;

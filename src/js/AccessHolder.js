@@ -1,26 +1,27 @@
-let React = require('react');
+const React = require('react');
+const ReactDOM = require('react-dom');
 
 let AccessHolder = React.createClass({
 
   clearForm: function() {
     console.log('Clearing form.');
-    React.findDOMNode(this.refs.firstName).value = '';
-    React.findDOMNode(this.refs.lastName).value = '';
-    React.findDOMNode(this.refs.emailAddress).value = '';
-    React.findDOMNode(this.refs.phoneNumber).value = '';
-    React.findDOMNode(this.refs.cardNumber).value = '';
-    React.findDOMNode(this.refs.expirationDate).value = '';
+    ReactDOM.findDOMNode(this.refs.firstName).value = '';
+    ReactDOM.findDOMNode(this.refs.lastName).value = '';
+    ReactDOM.findDOMNode(this.refs.emailAddress).value = '';
+    ReactDOM.findDOMNode(this.refs.phoneNumber).value = '';
+    ReactDOM.findDOMNode(this.refs.cardNumber).value = '';
+    ReactDOM.findDOMNode(this.refs.expirationDate).value = '';
   },
 
   handleSubmit: function(e) {
     e.preventDefault();
 
-    let firstName = React.findDOMNode(this.refs.firstName).value.trim();
-    let lastName = React.findDOMNode(this.refs.lastName).value.trim();
-    let email = React.findDOMNode(this.refs.emailAddress).value.trim();
-    let phone = React.findDOMNode(this.refs.phoneNumber).value.trim();
-    let cardNumber = React.findDOMNode(this.refs.cardNumber).value.trim();
-    let expirationDate = React.findDOMNode(this.refs.expirationDate).value.trim();
+    let firstName = ReactDOM.findDOMNode(this.refs.firstName).value.trim();
+    let lastName = ReactDOM.findDOMNode(this.refs.lastName).value.trim();
+    let email = ReactDOM.findDOMNode(this.refs.emailAddress).value.trim();
+    let phone = ReactDOM.findDOMNode(this.refs.phoneNumber).value.trim();
+    let cardNumber = ReactDOM.findDOMNode(this.refs.cardNumber).value.trim();
+    let expirationDate = ReactDOM.findDOMNode(this.refs.expirationDate).value.trim();
 
     if (!expirationDate || !firstName || !lastName) { return; }
 
