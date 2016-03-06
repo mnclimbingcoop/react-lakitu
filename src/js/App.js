@@ -1,4 +1,4 @@
-var ReactDOM = require('react-dom');
+import {render} from 'react-dom';
 
 /*eslint-disable */
 let Lakitu = require('./Lakitu');
