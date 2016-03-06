@@ -1,10 +1,11 @@
-var gulp = require('gulp');
-var gulpConfig = require('../gulp-config');
-var plumber = require('gulp-plumber');
-var taskConfig = gulpConfig.tasks.favicon;
+import gulp from 'gulp';
+import gulpConfig from '../gulp-config';
+import plumber from 'gulp-plumber';
+
+const taskConfig = gulpConfig.tasks.favicon;
 
 gulp.task('favicon', function(){
-  gulp.src(taskConfig.files.src)
+  return gulp.src(taskConfig.files.src)
     .pipe(plumber())
     .pipe(gulp.dest(taskConfig.files.dest));
 });

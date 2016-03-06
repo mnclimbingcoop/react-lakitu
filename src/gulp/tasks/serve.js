@@ -1,8 +1,9 @@
-var gulp = require('gulp');
-var browserSync = require('browser-sync');
-var reload = browserSync.reload;
+import gulp from 'gulp';
+import browserSync from 'browser-sync';
 
-gulp.task('serve', ['watch'], function() {
+const reload = browserSync.reload;
+
+gulp.task('serve', ['watch'], () => {
   browserSync({
     server: {
       baseDir: 'dist'
