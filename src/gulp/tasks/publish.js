@@ -1,11 +1,11 @@
-var gulp = require('gulp');
-var plumber = require('gulp-plumber');
-var s3 = require('gulp-s3');
-var fs = require('fs');
+import gulp from 'gulp';
+import plumber from 'gulp-plumber';
+import s3 from 'gulp-s3';
+import fs from 'fs';
 
-aws = JSON.parse(fs.readFileSync('./aws.json'));
+const aws = JSON.parse(fs.readFileSync('./aws.json'));
 
-gulp.task('publish', function(){
+gulp.task('publish', () => {
   gulp.src('./dist/**')
     .pipe(plumber())
     .pipe(s3(aws));

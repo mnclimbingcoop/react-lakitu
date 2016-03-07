@@ -1,10 +1,10 @@
-var gulpConfig = {
+let gulpConfig = {
     paths: {
         dist: './dist'
     }
 };
 
-var tasks = require('./config/tasks-config')(gulpConfig);
+let tasks = require('./config/tasks-config')(gulpConfig);
 
 gulpConfig.tasks = tasks;
 module.exports = gulpConfig;

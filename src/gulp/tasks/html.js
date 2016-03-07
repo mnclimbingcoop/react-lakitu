@@ -1,14 +1,15 @@
-var gulp = require('gulp');
-var gulpConfig = require('../gulp-config');
-var plumber = require('gulp-plumber');
-var taskConfig = gulpConfig.tasks.html;
+import gulp from 'gulp';
+import gulpConfig from '../gulp-config';
+import plumber from 'gulp-plumber';
 
-gulp.task('html', function(){
-  gulp.src(taskConfig.files.src)
+const taskConfig = gulpConfig.tasks.html;
+
+gulp.task('html', () => {
+  return gulp.src(taskConfig.files.src)
     .pipe(plumber())
     .pipe(gulp.dest(taskConfig.files.dest));
 });
 
-gulp.task('html:watch', ['html'], function () {
+gulp.task('html:watch', ['html'], () => {
   gulp.watch(taskConfig.files.src, ['html']);
 });
